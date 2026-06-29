@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Jorge</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Elementos decorativos de fondo para resaltar el glassmorphism */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: #4f46e5;
+            top: 20%;
+            left: 25%;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            background: #db2777;
+            bottom: 15%;
+            right: 20%;
+            animation: float 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(40px) scale(1.1); }
+        }
+
+        /* Base para el Squircle con Glassmorphism */
+        .squircle-card {
+            position: relative;
+            z-index: 10;
+            width: 380px;
+            height: 380px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+            /* Forma de Squircle mediante un radio de borde avanzado */
+            border-radius: 65px;
+            mask-image: paint(squircle); /* Para navegadores avanzados */
+            
+            /* Efecto Glassmorphism */
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .squircle-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* Segundo Squircle con Gradiente en Movimiento */
+        #card-2 {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        /* Capa interna para el gradiente animado detrás del texto en la segunda tarjeta */
+        #card-2::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg, 
+                rgba(236, 72, 153, 0.4), 
+                rgba(139, 92, 246, 0.4), 
+                rgba(59, 130, 246, 0.4), 
+                rgba(236, 72, 153, 0.4)
+            );
+            background-size: 300% 300%;
+            animation: gradientMove 8s ease infinite;
+            z-index: -1;
+            border-radius: 65px;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Estilos de Texto */
+        h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 35px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .love-text {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Botón Rojo Estilo Glassmorphism */
+        .btn-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.7) 0%, rgba(220, 38, 38, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+            outline: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-red:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(220, 38, 38, 0.5);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 1) 100%);
+        }
+
+        .btn-red:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(220, 38, 38, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondos difuminados para potenciar el efecto vidrio -->
+    <div class="bg-circle circle-1"></div>
+    <div class="bg-circle circle-2"></div>
+
+    <!-- Primera Tarjeta (Inicio) -->
+    <div class="squircle-card" id="card-1">
+        <h1>Si eres Jorge, presiona el botón de abajo</h1>
+        <button class="btn-red" id="action-btn">presióname</button>
+    </div>
+
+    <!-- Segunda Tarjeta (Mensaje Oculto) -->
+    <div class="squircle-card hidden" id="card-2">
+        <p class="love-text">Dice Santi que lo quiere mucho :3</p>
+    </div>
+
+    <script>
+        document.getElementById('action-btn').addEventListener('click', function() {
+            const card1 = document.getElementById('card-1');
+            const card2 = document.getElementById('card-2');
+            
+            // Ocultar primera tarjeta con animación
+            card1.classList.add('hidden');
+            
+            // Mostrar segunda tarjeta después de un breve delay para suavidad
+            setTimeout(() => {
+                card2.classList.remove('hidden');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
